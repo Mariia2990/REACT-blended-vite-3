@@ -1,36 +1,33 @@
-import { Container, CountryList, Heading, Loader, Section } from 'components';
+import { Container, CountryList, Loader, Section } from 'components';
 import { useEffect, useState } from 'react';
 import { getCountries } from 'service/countryApi';
 
 export const Home = () => {
-  const [countries, setCountries] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
+  const [countries, setCountries] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  useEffect(()=>{
+  useEffect(() => {
     const getData = async () => {
       try {
-        setIsLoading(true)
-        setErrorMsg('')
-        const data = await getCountries()
-        setCountries(data)
-        
+        setIsLoading(true);
+        setErrorMsg('');
+        const data = await getCountries();
+        setCountries(data);
       } catch (error) {
-        setErrorMsg(error.message)
+        setErrorMsg(error.message);
       } finally {
-        setIsLoading(false)
+        setIsLoading(false);
       }
-    }
-    getData()
-    
-    
-  },[])
+    };
+    getData();
+  }, []);
   return (
     <Section>
       <Container>
-       <CountryList countriesData={countries}/>
-       {isLoading && <Loader/>}
-       {errorMsg && <p>{errorMsg}</p>}
+        <CountryList countriesData={countries} />
+        {isLoading && <Loader />}
+        {errorMsg && <p>{errorMsg}</p>}
       </Container>
     </Section>
   );
